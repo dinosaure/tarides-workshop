@@ -1,0 +1,7 @@
+#!/bin/sh
+exec "aarch64-linux-gnu-ld" \
+    -nostdlib \
+    -z max-page-size="0x1000" \
+    -static \
+    -T $(dirname $0)/link.ld -l :abi.elf \
+    "$@"

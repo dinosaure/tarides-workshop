@@ -1,0 +1,16 @@
+#!/bin/sh
+
+prog="$(basename $0)"
+I="$(aarch64-linux-gnu-gcc -print-file-name=include)"
+
+[ "$#" -lt 1 ] && \
+    echo "$prog: No input files. Compilation terminated." 1>&1 && exit 1
+
+[ "$#" -eq 1 -a "$1" = "-v" ] && exec "aarch64-linux-gnu-gcc" "$@"
+
+[ -n "${__V}" ] && set -x
+exec "aarch64-linux-gnu-gcc" \
+    -isystem ${I} \
+    -I ${I} \
+    -ffreestanding \
+    "$@"
